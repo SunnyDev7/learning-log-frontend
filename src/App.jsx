@@ -1,7 +1,15 @@
-import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+
+import RegisterPage from "./pages/Register";
 
 function App() {
-  return <div>Welcome to Learning Log App</div>;
+  return (
+    <div>
+      <BrowserRouter>
+        <RegisterPage />
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
