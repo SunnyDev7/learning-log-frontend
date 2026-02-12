@@ -3,6 +3,7 @@ import { LayoutDashboard, BookOpen, LogOut } from "lucide-react";
 
 import { cn } from "../../lib/utils.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { ThemeToggle } from "../ThemeToggle.jsx";
 import { Button } from "../ui/button.jsx";
 
 const navItems = [{ path: "/", icon: LayoutDashboard, label: "Dashboard" }];
@@ -42,6 +43,8 @@ export function AppLayout({ children }) {
                 {item.label}
               </Link>
             ))}
+
+            <ThemeToggle />
 
             <Button
               variant="ghost"
