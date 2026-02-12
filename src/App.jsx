@@ -9,6 +9,7 @@ import { AppLayout } from "./components/layout/AppLayout.jsx";
 import RegisterPage from "./pages/Register";
 import LogInPage from "./pages/Login.jsx";
 import Index from "./pages/Index.jsx";
+import LogPage from "./pages/Log.jsx";
 
 function App() {
   return (
@@ -27,6 +28,16 @@ function App() {
                   <ProtectedRoute>
                     <AppLayout>
                       <Index />
+                    </AppLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/log"
+                element={
+                  <ProtectedRoute>
+                    <AppLayout>
+                      <LogPage />
                     </AppLayout>
                   </ProtectedRoute>
                 }
