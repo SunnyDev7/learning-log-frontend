@@ -4,6 +4,7 @@ import { Toaster } from "./components/ui/toaster.jsx";
 import { Toaster as Sonner } from "./components/ui/sonner.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute.jsx";
+import { AppLayout } from "./components/layout/AppLayout.jsx";
 import RegisterPage from "./pages/Register";
 import LogInPage from "./pages/Login.jsx";
 import Index from "./pages/Index.jsx";
@@ -22,7 +23,9 @@ function App() {
               path="/"
               element={
                 <ProtectedRoute>
-                  <Index />
+                  <AppLayout>
+                    <Index />
+                  </AppLayout>
                 </ProtectedRoute>
               }
             />
