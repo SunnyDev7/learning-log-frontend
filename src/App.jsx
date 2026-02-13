@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 
@@ -11,9 +12,11 @@ import LogInPage from "./pages/Login.jsx";
 import Index from "./pages/Index.jsx";
 import LogPage from "./pages/Log.jsx";
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <AuthProvider>
           <Toaster />
@@ -46,7 +49,7 @@ function App() {
           </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>
-    </div>
+    </QueryClientProvider>
   );
 }
 
