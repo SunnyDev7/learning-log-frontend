@@ -10,6 +10,7 @@ import { StreakDisplay } from "../components/dashboard/StreakDisplay.jsx";
 import { WeeklyProgress } from "../components/dashboard/WeeklyProgress.jsx";
 import { TodaySummary } from "../components/dashboard/TodaySummary.jsx";
 import { WeeklyChart } from "../components/dashboard/WeeklyChart.jsx";
+import { CategoryBreakdown } from "../components/dashboard/CategoryBreakdown.jsx";
 
 const Index = () => {
   const {
@@ -33,7 +34,12 @@ const Index = () => {
             Track your learning progress
           </p>
         </div>
-        <Link to="/log">Log Activity</Link>
+        <Button asChild>
+          <Link to="/log">
+            <Plus className="h-4 w-4 mr-2" />
+            Log Activity
+          </Link>
+        </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -56,6 +62,10 @@ const Index = () => {
 
       <div className="grid gap-6 md:grid-cols-2">
         <WeeklyChart data={weeklyData} categoryConfigs={categoryConfigs} />
+        <CategoryBreakdown
+          categories={weeklyTotalsByCategory}
+          categoryConfigs={categoryConfigs}
+        />
       </div>
     </div>
   );
