@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { useAuth } from "../context/AuthContext.jsx";
 import { useCategories } from "../hooks/useCategories.js";
 import { useActivities } from "../hooks/useActivities.js";
 import { useStats } from "../hooks/useStats.js";
@@ -13,6 +14,7 @@ import { WeeklyChart } from "../components/dashboard/WeeklyChart.jsx";
 import { CategoryBreakdown } from "../components/dashboard/CategoryBreakdown.jsx";
 
 const Index = () => {
+  const { user } = useAuth();
   const {
     stats,
     targets,
@@ -29,7 +31,9 @@ const Index = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-foreground">
+            {user?.name ? `${user.name}'s Dashboard` : "Dashboard"}
+          </h1>
           <p className="text-sm text-muted-foreground">
             Track your learning progress
           </p>
