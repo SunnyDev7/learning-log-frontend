@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "./components/ui/toaster.jsx";
 import { Toaster as Sonner } from "./components/ui/sonner.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { TooltipProvider } from "./components/ui/tooltip.jsx";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute.jsx";
 import { AppLayout } from "./components/layout/AppLayout.jsx";
 import RegisterPage from "./pages/Register";
@@ -19,34 +20,36 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/login" element={<LogInPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <AppLayout>
-                      <Index />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/log"
-                element={
-                  <ProtectedRoute>
-                    <AppLayout>
-                      <LogPage />
-                    </AppLayout>
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/login" element={<LogInPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Index />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/log"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <LogPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
