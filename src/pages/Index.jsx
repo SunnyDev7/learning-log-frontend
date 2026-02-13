@@ -53,6 +53,10 @@ const Index = () => {
 
         <TodaySummary log={todayData} categoryConfigs={categoryConfigs} />
       </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <WeeklyChart data={weeklyData} categoryConfigs={categoryConfigs} />
+      </div>
     </div>
   );
 };
