@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
+import { useCategories } from "../hooks/useCategories.js";
+import { useActivities } from "../hooks/useActivities.js";
+import { useStats } from "../hooks/useStats.js";
+import { getTodayDate } from "../lib/utils.js";
 import { StreakDisplay } from "../components/dashboard/StreakDisplay.jsx";
+import { WeeklyProgress } from "../components/dashboard/WeeklyProgress.jsx";
+import { TodaySummary } from "../components/dashboard/TodaySummary.jsx";
+import { WeeklyChart } from "../components/dashboard/WeeklyChart.jsx";
 
 const Index = () => {
+  const {
+    stats,
+    targets,
+    weeklyData,
+    weeklyActiveDays,
+    weeklyTotalsByCategory,
+    totalWeeklyHours,
+    categories,
+  } = useStats();
+  const { categories: categoryConfigs } = useCategories();
+  const { activities: todayData } = useActivities(getTodayDate());
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -16,7 +37,21 @@ const Index = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <StreakDisplay />
+        <StreakDisplay
+          currentStreak={stats?.currentStreak || 0}
+          longestStreak={stats?.longestStreak || 0}
+        />
+
+        <WeeklyProgress
+          activeDays={weeklyActiveDays}
+          targetMin={targets?.activeDaysPerWeek?.min || 5}
+          targetMax={targets?.activeDaysPerWeek?.max || 6}
+          totalHours={totalWeeklyHours}
+          targetHoursMin={targets?.weeklyHours?.min || 30}
+          targetHoursMax={targets?.weeklyHours?.max || 48}
+        />
+
+        <TodaySummary log={todayData} categoryConfigs={categoryConfigs} />
       </div>
     </div>
   );
