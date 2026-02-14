@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, BookOpen, LogOut, Clock } from "lucide-react";
+import { LayoutDashboard, BookOpen, LogOut, Clock, Timer } from "lucide-react";
 
 import { cn } from "../../lib/utils.js";
 import { useAuth } from "../../context/AuthContext.jsx";
@@ -9,6 +9,7 @@ import { Button } from "../ui/button.jsx";
 const navItems = [
   { path: "/", icon: LayoutDashboard, label: "Dashboard" },
   { path: "/log", icon: Clock, label: "Log" },
+  { path: "/pomodoro", icon: Timer, label: "Focus" },
 ];
 
 export function AppLayout({ children }) {

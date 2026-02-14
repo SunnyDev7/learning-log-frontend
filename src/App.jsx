@@ -12,6 +12,7 @@ import RegisterPage from "./pages/Register";
 import LogInPage from "./pages/Login.jsx";
 import Index from "./pages/Index.jsx";
 import LogPage from "./pages/Log.jsx";
+import PomodoroPage from "./pages/Pomodoro.jsx";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,16 @@ function App() {
                     <ProtectedRoute>
                       <AppLayout>
                         <LogPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/pomodoro"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <PomodoroPage />
                       </AppLayout>
                     </ProtectedRoute>
                   }
