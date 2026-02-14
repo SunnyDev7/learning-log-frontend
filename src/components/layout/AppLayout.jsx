@@ -3,7 +3,7 @@ import {
   LayoutDashboard,
   BookOpen,
   LogOut,
-  Clock,
+  NotebookPen,
   Timer,
   History,
   Settings,
@@ -16,7 +16,7 @@ import { Button } from "../ui/button.jsx";
 
 const navItems = [
   { path: "/", icon: LayoutDashboard, label: "Dashboard" },
-  { path: "/log", icon: Clock, label: "Log" },
+  { path: "/log", icon: NotebookPen, label: "Log" },
   { path: "/pomodoro", icon: Timer, label: "Focus" },
   { path: "/history", icon: History, label: "History" },
   { path: "/settings", icon: Settings, label: "Settings" },
@@ -69,6 +69,20 @@ export function AppLayout({ children }) {
               <LogOut className="h-4 w-4" />
             </Button>
           </nav>
+
+          {/* only visible to mobile screens */}
+          <div className="flex md:hidden items-center gap-1">
+            <ThemeToggle />
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleLogout}
+              className="h-9 w-9"
+            >
+              <LogOut className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </header>
 
