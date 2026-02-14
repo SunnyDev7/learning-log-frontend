@@ -6,6 +6,7 @@ import {
   Clock,
   Timer,
   History,
+  Settings,
 } from "lucide-react";
 
 import { cn } from "../../lib/utils.js";
@@ -18,6 +19,7 @@ const navItems = [
   { path: "/log", icon: Clock, label: "Log" },
   { path: "/pomodoro", icon: Timer, label: "Focus" },
   { path: "/history", icon: History, label: "History" },
+  { path: "/settings", icon: Settings, label: "Settings" },
 ];
 
 export function AppLayout({ children }) {
