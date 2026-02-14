@@ -8,7 +8,7 @@ import { Input } from "../../components/ui/input.jsx";
 export function CategoryEditForm({ category, onSave, onCancel }) {
   const [label, setLabel] = useState(category?.label || "");
   const [icon, setIcon] = useState(category?.icon || "📝");
-  const [color, setColor] = useState(category?.color || PRESET_COLORS[1]);
+  const [color, setColor] = useState(category?.color || PRESET_COLORS[0]);
   const [description, setDescription] = useState(category?.description || "");
 
   const handleSubmit = (e) => {
@@ -83,7 +83,7 @@ export function CategoryEditForm({ category, onSave, onCancel }) {
         <label className="text-sm font-medium text-foreground mb-1.5 block">
           Description{" "}
           <span className="text-muted-foreground font-normal">
-            (helps AI categorize activities)
+            (This coursework is from Udemy, about...)
           </span>
         </label>
         <Input
