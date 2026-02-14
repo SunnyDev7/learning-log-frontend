@@ -14,6 +14,7 @@ import Index from "./pages/Index.jsx";
 import LogPage from "./pages/Log.jsx";
 import PomodoroPage from "./pages/Pomodoro.jsx";
 import HistoryPage from "./pages/History.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +70,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
