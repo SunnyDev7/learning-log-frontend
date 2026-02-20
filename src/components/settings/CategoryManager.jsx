@@ -95,12 +95,12 @@ export function CategoryEditForm({ category, onSave, onCancel }) {
       </div>
 
       <div className="flex gap-2 pt-2">
-        <Button type="submit" className="flex-1" disabled={!label.trim()}>
-          <Check className="h-4 w-4 mr-1" />
+        <Button type="submit" size="lg" disabled={!label.trim()}>
+          <Check className="h-4 w-4" />
           Save
         </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
-          <X className="h-4 w-4 mr-1" />
+        <Button type="button" size="lg" variant="outline" onClick={onCancel}>
+          <X className="h-4 w-4" />
           Cancel
         </Button>
       </div>
