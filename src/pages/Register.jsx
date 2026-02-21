@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
+} from "../components/ui/card.jsx";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -29,8 +29,8 @@ export default function RegisterPage() {
 
     try {
       await register(name, email, password);
-      toast.success("Account created successfully!");
-      navigate("/");
+      toast.success("Account created successfully! Please Login again");
+      navigate("/login");
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
     } finally {
