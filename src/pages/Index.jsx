@@ -22,6 +22,7 @@ const Index = () => {
     weeklyActiveDays,
     weeklyTotalsByCategory,
     totalWeeklyHours,
+    totalWeeklyMinutes,
     categories,
   } = useStats();
   const { categories: categoryConfigs } = useCategories();
@@ -57,6 +58,7 @@ const Index = () => {
           targetMin={targets?.activeDaysPerWeek?.min || 5}
           targetMax={targets?.activeDaysPerWeek?.max || 6}
           totalHours={totalWeeklyHours}
+          totalMinutes={totalWeeklyMinutes}
           targetHoursMin={targets?.weeklyHours?.min || 30}
           targetHoursMax={targets?.weeklyHours?.max || 48}
         />

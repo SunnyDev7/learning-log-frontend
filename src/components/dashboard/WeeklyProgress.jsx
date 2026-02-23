@@ -1,12 +1,13 @@
 import { Calendar, Target } from "lucide-react";
 
-import { cn } from "../../lib/utils.js";
+import { cn, formatDuration } from "../../lib/utils.js";
 
 export function WeeklyProgress({
   activeDays,
   targetMin,
   targetMax,
   totalHours,
+  totalMinutes,
   targetHoursMin,
   targetHoursMax,
 }) {
@@ -50,7 +51,7 @@ export function WeeklyProgress({
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-foreground">Total Hours</span>
             <span className="text-sm font-medium text-foreground">
-              {totalHours.toFixed(1)}h
+              {formatDuration(totalMinutes)}
             </span>
           </div>
           <div className="h-2 bg-secondary rounded-full overflow-hidden">
@@ -78,7 +79,7 @@ export function WeeklyProgress({
             : "bg-yellow-500/10 text-yellow-500",
         )}
       >
-        {isOnTrack ? "✓ On track this week!" : "⚡ Keep pushing!"}
+        {isOnTrack ? "✓ On track this week!" : "Keep pushing to reach the goal!"}
       </div>
     </div>
   );
