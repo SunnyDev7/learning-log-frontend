@@ -49,6 +49,7 @@ export function useStats() {
     weeklyData: weeklyQuery.data?.days || [],
     weeklyActiveDays: weeklyQuery.data?.activeDays || 0,
     weeklyTotalsByCategory,
+    totalWeeklyMinutes,
     totalWeeklyHours,
     targets: targetsQuery.data,
     categories: weeklyQuery.data?.categories || [],

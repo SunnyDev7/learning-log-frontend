@@ -9,6 +9,8 @@ import {
   Legend,
 } from "recharts";
 
+import { formatDuration } from "../../lib/utils.js";
+
 export function WeeklyChart({ data, categoryConfigs }) {
   const { chartData, categoriesRecord } = useMemo(() => {
     const record = {};
@@ -22,7 +24,7 @@ export function WeeklyChart({ data, categoryConfigs }) {
     const processedData = data.map((d) => {
       const entry = { day: d.day };
       Object.entries(d.categories).forEach(([catId, minutes]) => {
-        entry[catId] = minutes / 60;
+        entry[catId] = minutes;
       });
       return entry;
     });
@@ -51,7 +53,7 @@ export function WeeklyChart({ data, categoryConfigs }) {
               axisLine={false}
               tickLine={false}
               tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-              tickFormatter={(value) => `${value}h`}
+              tickFormatter={(value) => formatDuration(value)}
             />
             <Tooltip
               contentStyle={{
@@ -61,7 +63,7 @@ export function WeeklyChart({ data, categoryConfigs }) {
               }}
               labelStyle={{ color: "hsl(var(--foreground))" }}
               formatter={(value, name) => [
-                `${value.toFixed(1)}h`,
+                formatDuration(value),
                 categoriesRecord[name]?.label || name,
               ]}
             />
