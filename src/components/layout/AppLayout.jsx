@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -13,6 +14,13 @@ import { cn } from "../../lib/utils.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { ThemeToggle } from "../ThemeToggle.jsx";
 import { Button } from "../ui/button.jsx";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "../ui/dialog.jsx";
 
 const navItems = [
   { path: "/", icon: LayoutDashboard, label: "Dashboard" },
@@ -26,6 +34,7 @@ export function AppLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -63,7 +72,7 @@ export function AppLayout({ children }) {
             <Button
               variant="ghost"
               size="icon"
-              onClick={handleLogout}
+              onClick={() => setShowLogoutDialog(true)}
               className="h-9 w-9 ml-2"
             >
               <LogOut className="h-4 w-4" />
@@ -77,7 +86,7 @@ export function AppLayout({ children }) {
             <Button
               variant="ghost"
               size="icon"
-              onClick={handleLogout}
+              onClick={() => setShowLogoutDialog(true)}
               className="h-9 w-9"
             >
               <LogOut className="h-4 w-4" />
@@ -109,6 +118,28 @@ export function AppLayout({ children }) {
           ))}
         </div>
       </nav>
+
+      <Dialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Confirm Logout</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to logout?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-3 pt-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowLogoutDialog(false)}
+            >
+              No
+            </Button>
+            <Button variant="destructive" onClick={handleLogout}>
+              Yes
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
