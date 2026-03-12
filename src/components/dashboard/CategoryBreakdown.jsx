@@ -63,12 +63,27 @@ export function CategoryBreakdown({ categories, categoryConfigs }) {
               ))}
             </Pie>
             <Tooltip
-              contentStyle={{
-                backgroundColor: "hsl(var(--card))",
-                border: "1px solid hsl(var(--border))",
-                borderRadius: "8px",
+              content={({ active, payload }) => {
+                if (!active || !payload?.length) return null;
+                const { name, value, color, icon } = payload[0].payload;
+                return (
+                  <div
+                    style={{
+                      backgroundColor: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px",
+                      padding: "8px 12px",
+                    }}
+                  >
+                    <p style={{ color, fontWeight: 600, margin: 0 }}>
+                      {icon} {name}
+                    </p>
+                    <p style={{ color, margin: 0, fontSize: "12px" }}>
+                      {formatDuration(value)}
+                    </p>
+                  </div>
+                );
               }}
-              formatter={(value) => [formatDuration(value), "Time"]}
             />
           </PieChart>
         </ResponsiveContainer>
