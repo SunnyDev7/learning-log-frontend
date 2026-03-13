@@ -55,12 +55,10 @@ const Index = () => {
 
         <WeeklyProgress
           activeDays={weeklyActiveDays}
-          targetMin={targets?.activeDaysPerWeek?.min || 5}
-          targetMax={targets?.activeDaysPerWeek?.max || 6}
+          targetDays={targets?.activeDaysPerWeek?.min || 5}
           totalHours={totalWeeklyHours}
           totalMinutes={totalWeeklyMinutes}
-          targetHoursMin={targets?.weeklyHours?.min || 30}
-          targetHoursMax={targets?.weeklyHours?.max || 48}
+          targetHours={targets?.weeklyHours?.min || 30}
         />
 
         <TodaySummary log={todayData} categoryConfigs={categoryConfigs} />

@@ -4,16 +4,14 @@ import { cn, formatDuration } from "../../lib/utils.js";
 
 export function WeeklyProgress({
   activeDays,
-  targetMin,
-  targetMax,
+  targetDays,
   totalHours,
   totalMinutes,
-  targetHoursMin,
-  targetHoursMax,
+  targetHours,
 }) {
   const daysProgress = (activeDays / 7) * 100;
-  const hoursProgress = Math.min((totalHours / targetHoursMin) * 100, 100);
-  const isOnTrack = activeDays >= targetMin || totalHours >= targetHoursMin;
+  const hoursProgress = Math.min((totalHours / targetHours) * 100, 100);
+  const isOnTrack = activeDays >= targetDays || totalHours >= targetHours;
 
   return (
     <div className="bg-card rounded-xl border border-border p-6">
@@ -37,13 +35,13 @@ export function WeeklyProgress({
             <div
               className={cn(
                 "h-full rounded-full transition-all duration-500",
-                activeDays >= targetMin ? "bg-streak-active" : "bg-primary",
+                activeDays >= targetDays ? "bg-streak-active" : "bg-primary",
               )}
               style={{ width: `${daysProgress}%` }}
             />
           </div>
           <p className="text-xs text-muted-foreground mt-1">
-            Target: {targetMin}-{targetMax} days
+            Target: {targetDays} days
           </p>
         </div>
 
@@ -58,7 +56,7 @@ export function WeeklyProgress({
             <div
               className={cn(
                 "h-full rounded-full transition-all duration-500",
-                totalHours >= targetHoursMin
+                totalHours >= targetHours
                   ? "bg-streak-active"
                   : "bg-primary",
               )}
@@ -66,7 +64,7 @@ export function WeeklyProgress({
             />
           </div>
           <p className="text-xs text-muted-foreground mt-1">
-            Target: {targetHoursMin}-{targetHoursMax}h
+            Target: {targetHours}h
           </p>
         </div>
       </div>
