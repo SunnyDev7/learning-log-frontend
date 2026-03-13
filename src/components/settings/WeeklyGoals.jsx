@@ -6,42 +6,37 @@ import { Input } from "../ui/input.jsx";
 
 export function WeeklyGoals({ targets, onSave, isUpdating }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [activeDaysMin, setActiveDaysMin] = useState(5);
-  const [activeDaysMax, setActiveDaysMax] = useState(6);
-  const [weeklyHoursMin, setWeeklyHoursMin] = useState(30);
-  const [weeklyHoursMax, setWeeklyHoursMax] = useState(48);
+  const [activeDays, setActiveDays] = useState(5);
+  const [weeklyHours, setWeeklyHours] = useState(30);
 
   useEffect(() => {
     if (targets) {
-      setActiveDaysMin(targets.activeDaysPerWeek?.min ?? 5);
-      setActiveDaysMax(targets.activeDaysPerWeek?.max ?? 6);
-      setWeeklyHoursMin(targets.weeklyHours?.min ?? 30);
-      setWeeklyHoursMax(targets.weeklyHours?.max ?? 48);
+      setActiveDays(targets.activeDaysPerWeek?.min ?? 5);
+      setWeeklyHours(targets.weeklyHours?.min ?? 30);
     }
   }, [targets]);
 
   const handleSave = () => {
-    const dMin = Math.max(0, Math.min(7, Number(activeDaysMin)));
-    const dMax = Math.max(dMin, Math.min(7, Number(activeDaysMax)));
-    const hMin = Math.max(0, Math.min(168, Number(weeklyHoursMin)));
-    const hMax = Math.max(hMin, Math.min(168, Number(weeklyHoursMax)));
+    const days = Math.max(0, Math.min(7, Number(activeDays)));
+    const hours = Math.max(0, Math.min(168, Number(weeklyHours)));
 
     onSave({
-      activeDaysPerWeek: { min: dMin, max: dMax },
-      weeklyHours: { min: hMin, max: hMax },
+      activeDaysPerWeek: { min: days, max: days },
+      weeklyHours: { min: hours, max: hours },
     });
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     if (targets) {
-      setActiveDaysMin(targets.activeDaysPerWeek?.min ?? 5);
-      setActiveDaysMax(targets.activeDaysPerWeek?.max ?? 6);
-      setWeeklyHoursMin(targets.weeklyHours?.min ?? 30);
-      setWeeklyHoursMax(targets.weeklyHours?.max ?? 48);
+      setActiveDays(targets.activeDaysPerWeek?.min ?? 5);
+      setWeeklyHours(targets.weeklyHours?.min ?? 30);
     }
     setIsEditing(false);
   };
+
+  const currentDays = targets?.activeDaysPerWeek?.min ?? 5;
+  const currentHours = targets?.weeklyHours?.min ?? 30;
 
   return (
     <div className="space-y-4">
@@ -64,67 +59,37 @@ export function WeeklyGoals({ targets, onSave, isUpdating }) {
 
       {isEditing ? (
         <div className="bg-secondary/50 rounded-lg p-4 border border-border space-y-5">
-          <div className="space-y-3">
+          <div className="space-y-2">
             <label className="text-sm font-medium text-foreground block">
               Active Days per Week
             </label>
             <div className="flex items-center gap-3">
-              <div className="flex-1">
-                <span className="text-xs text-muted-foreground mb-1 block">Min</span>
-                <Input
-                  type="number"
-                  min={0}
-                  max={7}
-                  value={activeDaysMin}
-                  onChange={(e) => setActiveDaysMin(e.target.value)}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <span className="text-muted-foreground mt-5">–</span>
-              <div className="flex-1">
-                <span className="text-xs text-muted-foreground mb-1 block">Max</span>
-                <Input
-                  type="number"
-                  min={0}
-                  max={7}
-                  value={activeDaysMax}
-                  onChange={(e) => setActiveDaysMax(e.target.value)}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <span className="text-muted-foreground mt-5 text-sm">days</span>
+              <Input
+                type="number"
+                min={0}
+                max={7}
+                value={activeDays}
+                onChange={(e) => setActiveDays(e.target.value)}
+                className="bg-secondary border-border w-24"
+              />
+              <span className="text-sm text-muted-foreground">days</span>
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             <label className="text-sm font-medium text-foreground block">
               Weekly Hours
             </label>
             <div className="flex items-center gap-3">
-              <div className="flex-1">
-                <span className="text-xs text-muted-foreground mb-1 block">Min</span>
-                <Input
-                  type="number"
-                  min={0}
-                  max={168}
-                  value={weeklyHoursMin}
-                  onChange={(e) => setWeeklyHoursMin(e.target.value)}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <span className="text-muted-foreground mt-5">–</span>
-              <div className="flex-1">
-                <span className="text-xs text-muted-foreground mb-1 block">Max</span>
-                <Input
-                  type="number"
-                  min={0}
-                  max={168}
-                  value={weeklyHoursMax}
-                  onChange={(e) => setWeeklyHoursMax(e.target.value)}
-                  className="bg-secondary border-border"
-                />
-              </div>
-              <span className="text-muted-foreground mt-5 text-sm">hours</span>
+              <Input
+                type="number"
+                min={0}
+                max={168}
+                value={weeklyHours}
+                onChange={(e) => setWeeklyHours(e.target.value)}
+                className="bg-secondary border-border w-24"
+              />
+              <span className="text-sm text-muted-foreground">hours</span>
             </div>
           </div>
 
@@ -144,14 +109,14 @@ export function WeeklyGoals({ targets, onSave, isUpdating }) {
           <div className="bg-card rounded-lg p-4 border border-border">
             <p className="text-sm text-muted-foreground mb-1">Active Days</p>
             <p className="text-2xl font-bold text-foreground">
-              {targets?.activeDaysPerWeek?.min ?? 5}–{targets?.activeDaysPerWeek?.max ?? 6}
+              {currentDays}
               <span className="text-sm font-normal text-muted-foreground ml-1">days/week</span>
             </p>
           </div>
           <div className="bg-card rounded-lg p-4 border border-border">
             <p className="text-sm text-muted-foreground mb-1">Weekly Hours</p>
             <p className="text-2xl font-bold text-foreground">
-              {targets?.weeklyHours?.min ?? 30}–{targets?.weeklyHours?.max ?? 48}
+              {currentHours}
               <span className="text-sm font-normal text-muted-foreground ml-1">hrs/week</span>
             </p>
           </div>
