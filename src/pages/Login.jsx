@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { Button } from "../components/ui/button.jsx";
 import { Input } from "../components/ui/input.jsx";
 import { Label } from "../components/ui/label.jsx";
+import { Loader } from "../components/ui/loader.jsx";
 import {
   Card,
   CardContent,
@@ -19,6 +20,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -29,6 +31,8 @@ export default function LoginPage() {
     try {
       await login(email, password);
       toast.success("Welcome back!");
+      setRedirecting(true);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
@@ -36,6 +40,10 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  if (redirecting) {
+    return <Loader fullScreen message="Signing you in..." />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">

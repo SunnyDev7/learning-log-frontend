@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { Button } from "../components/ui/button.jsx";
 import { Input } from "../components/ui/input.jsx";
 import { Label } from "../components/ui/label.jsx";
+import { Loader } from "../components/ui/loader.jsx";
 import {
   Card,
   CardContent,
@@ -20,7 +21,8 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
+  const [redirecting, setRedirecting] = useState(false);
+  const { register, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -29,7 +31,10 @@ export default function RegisterPage() {
 
     try {
       await register(name, email, password);
-      toast.success("Account created successfully! Please Login again");
+      toast.success("Account created successfully! Please login.");
+      setRedirecting(true);
+      logout();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       navigate("/login");
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
@@ -37,6 +42,10 @@ export default function RegisterPage() {
       setLoading(false);
     }
   };
+
+  if (redirecting) {
+    return <Loader fullScreen message="Setting up your account..." />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
