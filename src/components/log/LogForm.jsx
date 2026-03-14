@@ -22,6 +22,7 @@ export function LogForm({ onActivityLogged }) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLog = async () => {
@@ -45,7 +46,7 @@ export function LogForm({ onActivityLogged }) {
     try {
       await logActivity({
         categoryId: category._id,
-        description: category.label,
+        description: description.trim() || category.label,
         duration: totalMinutes,
         date: getTodayDate(),
       });
@@ -57,6 +58,7 @@ export function LogForm({ onActivityLogged }) {
       setSelectedCategory("");
       setHours("");
       setMinutes("");
+      setDescription("");
 
       onActivityLogged?.();
     } catch (error) {
@@ -123,6 +125,19 @@ export function LogForm({ onActivityLogged }) {
               <span className="text-sm text-muted-foreground">min</span>
             </div>
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="description">Description (optional)</Label>
+          <textarea
+            id="description"
+            placeholder="What did you work on?"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            maxLength={500}
+            rows={3}
+            className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+          />
         </div>
 
         <Button
