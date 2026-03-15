@@ -19,6 +19,14 @@ export function useStats() {
     },
   });
 
+  const yearlyQuery = useQuery({
+    queryKey: ["stats", "yearly"],
+    queryFn: async () => {
+      const response = await api.get("/api/stats/yearly");
+      return response.data.data;
+    },
+  });
+
   const targetsQuery = useQuery({
     queryKey: ["targets"],
     queryFn: async () => {
@@ -51,6 +59,7 @@ export function useStats() {
     weeklyTotalsByCategory,
     totalWeeklyMinutes,
     totalWeeklyHours,
+    yearlyData: yearlyQuery.data?.months || [],
     targets: targetsQuery.data,
     categories: weeklyQuery.data?.categories || [],
     isLoading: dashboardQuery.isLoading || weeklyQuery.isLoading,
