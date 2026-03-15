@@ -88,15 +88,24 @@ export default function HistoryPage() {
                   return (
                     <div
                       key={activity._id}
-                      className="flex items-center gap-2 text-sm"
+                      className="flex items-start gap-2 text-sm"
                     >
-                      <span>{cat.icon}</span>
-                      <span className="flex-1 text-foreground">
-                        {activity.description}
-                      </span>
-                      <span style={{ color: cat.color }}>
-                        {formatDuration(activity.duration)}
-                      </span>
+                      <span className="mt-0.5">{cat.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-foreground font-medium truncate">
+                            {cat.label}
+                          </span>
+                          <span className="shrink-0" style={{ color: cat.color }}>
+                            {formatDuration(activity.duration)}
+                          </span>
+                        </div>
+                        {activity.description && activity.description !== cat.label && (
+                          <p className="text-muted-foreground text-xs mt-0.5 line-clamp-2">
+                            {activity.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
