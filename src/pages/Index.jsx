@@ -12,6 +12,7 @@ import { WeeklyProgress } from "../components/dashboard/WeeklyProgress.jsx";
 import { TodaySummary } from "../components/dashboard/TodaySummary.jsx";
 import { WeeklyChart } from "../components/dashboard/WeeklyChart.jsx";
 import { CategoryBreakdown } from "../components/dashboard/CategoryBreakdown.jsx";
+import { YearlyChart } from "../components/dashboard/YearlyChart.jsx";
 
 const Index = () => {
   const { user } = useAuth();
@@ -23,6 +24,7 @@ const Index = () => {
     weeklyTotalsByCategory,
     totalWeeklyHours,
     totalWeeklyMinutes,
+    yearlyData,
     categories,
   } = useStats();
   const { categories: categoryConfigs } = useCategories();
@@ -71,6 +73,8 @@ const Index = () => {
           categoryConfigs={categoryConfigs}
         />
       </div>
+
+      <YearlyChart data={yearlyData} />
     </div>
   );
 };
