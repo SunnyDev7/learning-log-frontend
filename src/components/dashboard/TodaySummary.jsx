@@ -69,7 +69,7 @@ export function TodaySummary({ log, categoryConfigs, onViewMore }) {
             >
               <span className="text-base">{category.icon}</span>
               <span className="flex-1 text-sm text-foreground truncate">
-                {activity.description}
+                {category.label}
               </span>
               <span
                 className="text-xs font-medium shrink-0"
