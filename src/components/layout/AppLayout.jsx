@@ -12,6 +12,7 @@ import {
 
 import { cn } from "../../lib/utils.js";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { usePomodoro } from "../../context/PomodoroContext.jsx";
 import { ThemeToggle } from "../ThemeToggle.jsx";
 import { Button } from "../ui/button.jsx";
 import {
@@ -34,7 +35,14 @@ export function AppLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const { isRunning, timeLeft } = usePomodoro();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+
+  const formatTimerBadge = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const handleLogout = () => {
     logout();
@@ -51,21 +59,32 @@ export function AppLayout({ children }) {
           </div>
 
           <nav className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                  location.pathname === item.path
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary",
-                )}
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const showTimer = item.path === "/pomodoro" && isRunning && location.pathname !== "/pomodoro";
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    "relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                    location.pathname === item.path
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary",
+                  )}
+                >
+                  <item.icon className="h-4 w-4" />
+                  {item.label}
+                  {showTimer && (
+                    <>
+                      <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />
+                      <span className="ml-1 text-xs tabular-nums text-green-500 font-mono">
+                        {formatTimerBadge(timeLeft)}
+                      </span>
+                    </>
+                  )}
+                </Link>
+              );
+            })}
 
             <ThemeToggle />
 
@@ -101,21 +120,31 @@ export function AppLayout({ children }) {
 
       <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur-sm">
         <div className="flex items-center justify-around h-16">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={cn(
-                "flex flex-col items-center gap-1 p-2 rounded-lg transition-colors",
-                location.pathname === item.path
-                  ? "text-primary"
-                  : "text-muted-foreground",
-              )}
-            >
-              <item.icon className="h-5 w-5" />
-              <span className="text-xs">{item.label}</span>
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const showTimer = item.path === "/pomodoro" && isRunning && location.pathname !== "/pomodoro";
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={cn(
+                  "relative flex flex-col items-center gap-1 p-2 rounded-lg transition-colors",
+                  location.pathname === item.path
+                    ? "text-primary"
+                    : "text-muted-foreground",
+                )}
+              >
+                <div className="relative">
+                  <item.icon className="h-5 w-5" />
+                  {showTimer && (
+                    <span className="absolute -top-1 -right-1.5 h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />
+                  )}
+                </div>
+                <span className="text-xs">
+                  {showTimer ? formatTimerBadge(timeLeft) : item.label}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </nav>
 
