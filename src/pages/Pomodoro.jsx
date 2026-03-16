@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { Play, Pause, RotateCcw, Clock, Timer } from "lucide-react";
 import { toast } from "sonner";
 
 import { useCategories } from "../hooks/useCategories.js";
 import { useActivities } from "../hooks/useActivities.js";
+import { usePomodoro } from "../context/PomodoroContext.jsx";
 import { getTodayDate } from "../lib/utils.js";
 import { TIME_PRESETS } from "../lib/constants.js";
 import { Button } from "../components/ui/button.jsx";
@@ -30,36 +31,25 @@ import {
 const PomodoroPage = () => {
   const { categories } = useCategories();
   const { logActivity } = useActivities();
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [initialMinutes, setInitialMinutes] = useState(25);
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
-  const [isRunning, setIsRunning] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    initialMinutes,
+    timeLeft,
+    isRunning,
+    hasStarted,
+    elapsedTime,
+    handleStart,
+    handlePause,
+    handleReset,
+    handleSetTime,
+  } = usePomodoro();
 
   useEffect(() => {
     if (categories.length > 0 && !selectedCategory) {
       setSelectedCategory(categories[0]._id);
     }
-  }, [categories, selectedCategory]);
-
-  useEffect(() => {
-    let interval = null;
-
-    if (isRunning && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-        setElapsedTime((prev) => prev + 1);
-      }, 1000);
-    } else if (timeLeft === 0 && isRunning) {
-      setIsRunning(false);
-      toast.success("Timer completed! Don't forget to log your activity.");
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isRunning, timeLeft]);
+  }, [categories, selectedCategory, setSelectedCategory]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -67,32 +57,8 @@ const PomodoroPage = () => {
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
-  const handleStart = () => {
-    if (!selectedCategory) {
-      toast.error("Please select a category first");
-      return;
-    }
-    setIsRunning(true);
-    setHasStarted(true);
-  };
-
-  const handlePause = () => {
-    setIsRunning(false);
-  };
-
-  const handleReset = () => {
-    setIsRunning(false);
-    setTimeLeft(initialMinutes * 60);
-    setHasStarted(false);
-    setElapsedTime(0);
-  };
-
-  const handleSetTime = (minutes) => {
-    setInitialMinutes(minutes);
-    setTimeLeft(minutes * 60);
-    setHasStarted(false);
-    setElapsedTime(0);
-    setIsRunning(false);
+  const onStart = () => {
+    handleStart(selectedCategory);
   };
 
   const handleLog = useCallback(async () => {
@@ -127,7 +93,7 @@ const PomodoroPage = () => {
     } catch (error) {
       toast.error("Failed to log activity");
     }
-  }, [selectedCategory, elapsedTime, categories, logActivity]);
+  }, [selectedCategory, elapsedTime, categories, logActivity, handleReset]);
 
   const canLog = !isRunning && hasStarted && elapsedTime >= 60;
   const progress =
@@ -218,7 +184,7 @@ const PomodoroPage = () => {
             {!isRunning ? (
               <Button
                 size="lg"
-                onClick={handleStart}
+                onClick={onStart}
                 className="gap-2 px-8"
                 disabled={timeLeft === 0}
               >

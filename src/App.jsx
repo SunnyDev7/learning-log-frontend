@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "./components/ui/toaster.jsx";
 import { Toaster as Sonner } from "./components/ui/sonner.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { PomodoroProvider } from "./context/PomodoroContext.jsx";
 import { TooltipProvider } from "./components/ui/tooltip.jsx";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute.jsx";
 import { AppLayout } from "./components/layout/AppLayout.jsx";
@@ -24,6 +25,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
         <AuthProvider>
+          <PomodoroProvider>
           <TooltipProvider>
             <Toaster />
             <Sonner />
@@ -85,6 +87,7 @@ function App() {
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
+          </PomodoroProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
