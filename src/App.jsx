@@ -11,6 +11,8 @@ import { ProtectedRoute } from "./components/auth/ProtectedRoute.jsx";
 import { AppLayout } from "./components/layout/AppLayout.jsx";
 import RegisterPage from "./pages/Register";
 import LogInPage from "./pages/Login.jsx";
+import ForgotPasswordPage from "./pages/ForgotPassword.jsx";
+import ResetPasswordPage from "./pages/ResetPassword.jsx";
 import Index from "./pages/Index.jsx";
 import LogPage from "./pages/Log.jsx";
 import PomodoroPage from "./pages/Pomodoro.jsx";
@@ -33,6 +35,8 @@ function App() {
               <Routes>
                 <Route path="/login" element={<LogInPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route
                   path="/"
                   element={
