@@ -24,7 +24,7 @@ import {
 } from "../ui/dialog.jsx";
 
 const navItems = [
-  { path: "/", icon: LayoutDashboard, label: "Dashboard" },
+  { path: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { path: "/log", icon: NotebookPen, label: "Log" },
   { path: "/pomodoro", icon: Timer, label: "Focus" },
   { path: "/history", icon: History, label: "History" },
