@@ -33,7 +33,7 @@ export default function LoginPage() {
       toast.success("Welcome back!");
       setRedirecting(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
     } finally {

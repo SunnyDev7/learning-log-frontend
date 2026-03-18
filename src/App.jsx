@@ -18,6 +18,7 @@ import LogPage from "./pages/Log.jsx";
 import PomodoroPage from "./pages/Pomodoro.jsx";
 import HistoryPage from "./pages/History.jsx";
 import SettingsPage from "./pages/Settings.jsx";
+import LandingPage from "./pages/Landing.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 const queryClient = new QueryClient();
@@ -33,12 +34,13 @@ function App() {
             <Sonner />
             <BrowserRouter>
               <Routes>
+                <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<LogInPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route
-                  path="/"
+                  path="/dashboard"
                   element={
                     <ProtectedRoute>
                       <AppLayout>

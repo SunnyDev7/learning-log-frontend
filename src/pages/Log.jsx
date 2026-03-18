@@ -7,7 +7,7 @@ export default function LogPage() {
 
   return (
     <div className="max-w-md mx-auto py-8">
-      <LogForm onActivityLogged={() => navigate("/")} />
+      <LogForm onActivityLogged={() => navigate("/dashboard")} />
     </div>
   );
 }
